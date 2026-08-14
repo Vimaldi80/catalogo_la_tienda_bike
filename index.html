@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo de Productos</title>
+
+  <!--
+    Fuentes desde Google Fonts (gratis, cargan directo desde internet).
+    - Fraunces: fuente serif con carácter, la usamos en títulos.
+    - Inter: fuente sans-serif limpia, la usamos en textos normales.
+    - JetBrains Mono: fuente tipo "máquina de escribir", la usamos en precios
+      y códigos, para que se vea como una lista de inventario/ficha técnica.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+  <!-- Nuestro archivo de estilos, separado del HTML -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============ ENCABEZADO ============ -->
+  <!-- Aquí va el nombre del negocio. Cámbialo por el tuyo. -->
+ <header class="header">
+  <!-- Rueda decorativa de fondo, es puramente visual -->
+  <svg class="header-wheel" viewBox="0 0 260 260" aria-hidden="true">
+    <g class="wheel-spin">
+      <circle cx="130" cy="130" r="105" fill="none" stroke="#FECD03" stroke-width="3"/>
+      <circle cx="130" cy="130" r="105" fill="none" stroke="#EC056E" stroke-width="1" stroke-dasharray="2 6"/>
+      <circle cx="130" cy="130" r="14" fill="#EC056E"/>
+      <line x1="130" y1="130" x2="130" y2="25" stroke="#FECD03" stroke-width="2"/>
+      <line x1="130" y1="130" x2="205" y2="70" stroke="#FECD03" stroke-width="2"/>
+      <line x1="130" y1="130" x2="230" y2="130" stroke="#FECD03" stroke-width="2"/>
+      <line x1="130" y1="130" x2="205" y2="190" stroke="#FECD03" stroke-width="2"/>
+      <line x1="130" y1="130" x2="130" y2="235" stroke="#FECD03" stroke-width="2"/>
+      <line x1="130" y1="130" x2="55" y2="190" stroke="#FECD03" stroke-width="2"/>
+      <line x1="130" y1="130" x2="30" y2="130" stroke="#FECD03" stroke-width="2"/>
+      <line x1="130" y1="130" x2="55" y2="70" stroke="#FECD03" stroke-width="2"/>
+    </g>
+  </svg>
+
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <img src="assets/logo.png" alt="La Tienda Bike" class="brand-logo">
+    </div>
+    <div class="brand-text">
+      <span class="brand-eyebrow">Catálogo</span>
+      <h1 class="brand-name">La Tienda Bike</h1>
+      <div class="brand-underline"></div>
+      <p class="brand-tagline">Hace tu pedaleo más seguro y cómodo.</p>
+    </div>
+  </div>
+
+  <!-- Barra de confianza: datos rápidos que generan credibilidad -->
+  <div class="trust-badges">
+    <span class="trust-badge">✓ +100 productos</span>
+    <span class="trust-badge">🚚 Despacho a todo Chile</span>
+    <span class="trust-badge">💬 Atención por WhatsApp</span>
+  </div>
+</header>
+
+  <!-- ============ BARRA DE BÚSQUEDA Y FILTROS ============ -->
+  <!-- Este bloque se llena dinámicamente con JavaScript (script.js),
+       lo único fijo aquí es el input de búsqueda -->
+  <section class="controls">
+    <div class="controls-inner">
+      <input
+        type="text"
+        id="buscador"
+        class="search-input"
+        placeholder="Buscar producto por nombre..."
+        aria-label="Buscar producto"
+      >
+      <!-- Los botones de categoría (Todas, Herramientas, etc.) se generan
+           automáticamente desde products.json en script.js -->
+      <div id="filtros-categoria" class="category-filters"></div>
+    </div>
+  </section>
+
+  <!-- ============ CONTADOR DE RESULTADOS ============ -->
+  <div class="results-bar">
+    <span id="contador-resultados"></span>
+  </div>
+
+  <!-- ============ GRILLA DE PRODUCTOS ============ -->
+  <!-- Este contenedor empieza vacío. script.js lo llena creando una
+       "tarjeta" (card) por cada producto que venga de products.json -->
+  <main class="catalog-grid" id="catalogo">
+    <!-- Las tarjetas de producto se insertan aquí por JavaScript -->
+  </main>
+
+  <!-- Mensaje que aparece si una búsqueda no encuentra nada -->
+  <div id="sin-resultados" class="empty-state" hidden>
+    <p>No encontramos productos con ese nombre.</p>
+    <p class="empty-state-sub">Prueba con otra palabra o revisa las categorías.</p>
+  </div>
+
+  <!-- ============ PIE DE PÁGINA ============ -->
+  <footer class="footer">
+    <p>¿Tienes dudas? Escríbenos directo por
+      <a href="https://wa.me/56900000000" target="_blank" rel="noopener">WhatsApp</a>.
+    </p>
+  </footer>
+
+  <!-- Nuestro archivo de lógica (JavaScript) -->
+  <script src="script.js"></script>
+</body>
+</html>

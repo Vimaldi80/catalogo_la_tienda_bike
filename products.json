@@ -1,0 +1,129 @@
+{
+  "_comentario": "Este archivo es la 'base de datos' del catálogo. Cada objeto { } es un producto. Para agregar uno nuevo, copia un bloque completo, pégalo antes de la línea que dice ']' y cambia los valores. El campo 'id' debe ser único para cada producto (nunca repetido). Este campo _comentario no se muestra en el sitio, es solo para orientarte.",
+
+  "categorias": [
+    "Todas",
+    "Herramientas",
+    "Vestuario",
+    "Seguridad",
+    "Niños"
+  ],
+
+  "productos": [
+    {
+      "id": "p001",
+      "nombre": "Balaclava Pasamontaña Lycra / Outdoor / Trekking",
+      "categoria": "Vestuario",
+      "precio": 6990,
+      "descripcion": "La balaclava de lycra negra táctica, versátil y funcional, ideal para actividades al aire libre como motociclismo, trekking y ciclismo. Diseño ergonómico, asegura una excelente protección contra el frío y el viento, sin sacrificar la comodidad.",
+      "caracteristicas": [
+        "Material: Lycra de alta calidad, suave y elástica.",
+        "Color: Negro, fácil de combinar y de aspecto discreto.",
+        "Diseño: Cubre toda la cabeza y el cuello, con aberturas para los ojos y la boca, permitiendo una buena visibilidad y ventilación.",
+        "Uso: Perfecta para actividades al aire libre en climas fríos, protege del sol, el viento y el polvo."
+      ],
+      "imagen": "assets/productos/balaclava.jpg",
+      "stock": "disponible"
+    },
+    {
+      "id": "p002",
+      "nombre": "Set de destornilladores (12 piezas)",
+      "categoria": "Herramientas",
+      "precio": 12990,
+      "descripcion": "Set completo con puntas magnéticas intercambiables.",
+      "caracteristicas": [
+        "12 piezas",
+        "Puntas magnéticas",
+        "Estuche incluido"
+      ],
+      "imagen": "",
+      "stock": "disponible"
+    },
+    {
+      "id": "p003",
+      "nombre": "Audífonos Bluetooth inalámbricos",
+      "categoria": "Vestuario",
+      "precio": 24990,
+      "descripcion": "Audífonos con cancelación de ruido y hasta 30 horas de batería.",
+      "caracteristicas": [
+        "Bluetooth 5.3",
+        "Cancelación de ruido activa",
+        "30 horas de batería",
+        "Resistentes al agua (IPX4)"
+      ],
+      "imagen": "",
+      "stock": "pocas"
+    },
+    {
+      "id": "p004",
+      "nombre": "Cargador rápido USB-C 65W",
+      "categoria": "Vestuario",
+      "precio": 15990,
+      "descripcion": "Cargador compacto compatible con notebooks, celulares y tablets.",
+      "caracteristicas": [
+        "Potencia: 65W",
+        "2 puertos USB-C",
+        "Compatible con carga rápida"
+      ],
+      "imagen": "",
+      "stock": "agotado"
+    },
+    {
+      "id": "p005",
+      "nombre": "Organizador de cocina 3 niveles",
+      "categoria": "Hogar",
+      "precio": 18990,
+      "descripcion": "Organizador apilable de acero inoxidable para especias y utensilios.",
+      "caracteristicas": [
+        "Material: acero inoxidable",
+        "3 niveles",
+        "Fácil de limpiar"
+      ],
+      "imagen": "",
+      "stock": "disponible"
+    },
+    {
+      "id": "p006",
+      "nombre": "Silla ergonómica de oficina",
+      "categoria": "Oficina",
+      "precio": 89990,
+      "descripcion": "Silla con soporte lumbar ajustable y reposabrazos regulables.",
+      "caracteristicas": [
+        "Soporte lumbar ajustable",
+        "Altura regulable",
+        "Reposabrazos 3D",
+        "Carga máxima: 120kg"
+      ],
+      "imagen": "",
+      "stock": "disponible"
+    },
+    {
+      "id": "p007",
+      "nombre": "Organizador de escritorio",
+      "categoria": "Oficina",
+      "precio": 9990,
+      "descripcion": "Organizador de madera con compartimentos para papelería y accesorios.",
+      "caracteristicas": [
+        "Material: MDF",
+        "5 compartimentos",
+        "Diseño compacto"
+      ],
+      "imagen": "",
+      "stock": "disponible"
+    },
+    {
+      "id": "p008",
+      "nombre": "Lámpara LED de escritorio",
+      "categoria": "Hogar",
+      "precio": 13990,
+      "descripcion": "Lámpara regulable con 3 niveles de luz y puerto de carga USB.",
+      "caracteristicas": [
+        "3 niveles de intensidad",
+        "Puerto USB integrado",
+        "Brazo flexible"
+      ],
+      "imagen": "",
+      "stock": "pocas"
+    }
+  ]
+}
