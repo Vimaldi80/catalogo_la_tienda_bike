@@ -9,39 +9,34 @@
     "Niños"
   ],
 
-  "productos": [
-    {
-      "id": "p001",
+      "productos": [
+        {
+      "id": "v001",
       "nombre": "Balaclava Pasamontaña Lycra / Outdoor / Trekking",
       "categoria": "Vestuario",
       "precio": 6990,
-      "descripcion": "La balaclava de lycra negra táctica, versátil y funcional, ideal para actividades al aire libre como motociclismo, trekking y ciclismo. Diseño ergonómico, asegura una excelente protección contra el frío y el viento, sin sacrificar la comodidad.",
-      "caracteristicas": [
-        "Material: Lycra de alta calidad, suave y elástica.",
-        "Color: Negro, fácil de combinar y de aspecto discreto.",
-        "Diseño: Cubre toda la cabeza y el cuello, con aberturas para los ojos y la boca, permitiendo una buena visibilidad y ventilación.",
-        "Uso: Perfecta para actividades al aire libre en climas fríos, protege del sol, el viento y el polvo."
-      ],
+      "descripcion": "Balaclava térmica en lycra, protege rostro y cuello del frío y viento en salidas en bicicleta.",
+      "caracteristicas": ["Tela lycra elástica", "Transpirable", "Ajuste ergonómico al rostro"],
       "imagen": "assets/productos/balaclava.jpg",
+      "talla": "Única",
+      "color": "Negro",
       "stock": "disponible"
     },
     {
-      "id": "p002",
-      "nombre": "Set de destornilladores (12 piezas)",
-      "categoria": "Herramientas",
+      "id": "s001",
+      "nombre": "Candado para Bicicleta Tipo U Lock",
+      "categoria": "Seguridad",
       "precio": 12990,
-      "descripcion": "Set completo con puntas magnéticas intercambiables.",
-      "caracteristicas": [
-        "12 piezas",
-        "Puntas magnéticas",
-        "Estuche incluido"
-      ],
-      "imagen": "",
+      "descripcion": "Candado en U de acero reforzado, ideal para asegurar tu bicicleta en la calle.",
+      "caracteristicas": ["Acero templado de alta resistencia", "Incluye 2 llaves", "Soporte de montaje incluido"],
+      "imagen": "assets/productos/ulock_rojo.jpg",
+      "talla": "",
+      "color": "Plateado - Rojo",
       "stock": "disponible"
-    },
+},
     {
       "id": "p003",
-      "nombre": "Audífonos Bluetooth inalámbricos",
+      "nombre": "Audífonos Bl",
       "categoria": "Vestuario",
       "precio": 24990,
       "descripcion": "Audífonos con cancelación de ruido y hasta 30 horas de batería.",

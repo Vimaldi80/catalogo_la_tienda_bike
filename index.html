@@ -103,6 +103,22 @@
     </p>
   </footer>
 
+<!-- Ventana emergente con la descripción completa del producto.
+       Empieza oculta, script.js la muestra cuando corresponde. -->
+  <div class="modal-overlay" id="modal-detalle">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-titulo" id="modal-titulo"></h3>
+        <button class="modal-cerrar" id="modal-cerrar" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-descripcion" id="modal-descripcion"></p>
+        <div class="modal-caracteristicas-label">Características</div>
+        <ul class="modal-caracteristicas" id="modal-caracteristicas"></ul>
+      </div>
+    </div>
+  </div>
+
   <!-- Nuestro archivo de lógica (JavaScript) -->
   <script src="script.js"></script>
 </body>

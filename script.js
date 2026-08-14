@@ -12,6 +12,12 @@ const elFiltrosCategoria = document.getElementById("filtros-categoria");
 const elContador = document.getElementById("contador-resultados");
 const elSinResultados = document.getElementById("sin-resultados");
 
+// Referencias al modal de descripción (del index.html)
+const elModal = document.getElementById("modal-detalle");
+const elModalTitulo = document.getElementById("modal-titulo");
+const elModalDescripcion = document.getElementById("modal-descripcion");
+const elModalCaracteristicas = document.getElementById("modal-caracteristicas");
+
 // Estado actual de la vista (qué categoría y qué texto de búsqueda hay activos)
 let categoriaActiva = "Todas";
 let textoBusqueda = "";
@@ -110,7 +116,42 @@ function crearLinkWhatsapp(producto) {
 }
 
 /* ============================================================
-   5. DIBUJAR LAS TARJETAS DE PRODUCTO
+   5. ABRIR Y CERRAR EL MODAL DE DESCRIPCIÓN
+   Recibe el id del producto, busca sus datos completos en
+   todosLosProductos y llena el modal antes de mostrarlo.
+   ============================================================ */
+function abrirModal(idProducto) {
+  const producto = todosLosProductos.find((p) => p.id === idProducto);
+  if (!producto) return;
+
+  elModalTitulo.textContent = producto.nombre;
+  elModalDescripcion.textContent = producto.descripcion;
+  elModalCaracteristicas.innerHTML = producto.caracteristicas
+    .map((item) => `<li>${item}</li>`)
+    .join("");
+
+  elModal.classList.add("activo");
+}
+
+function cerrarModal() {
+  elModal.classList.remove("activo");
+}
+
+// Cerrar con el botón "✕"
+document.getElementById("modal-cerrar").addEventListener("click", cerrarModal);
+
+// Cerrar al hacer clic fuera de la caja (en el fondo oscuro)
+elModal.addEventListener("click", (evento) => {
+  if (evento.target === elModal) cerrarModal();
+});
+
+// Cerrar con la tecla Escape
+document.addEventListener("keydown", (evento) => {
+  if (evento.key === "Escape") cerrarModal();
+});
+
+/* ============================================================
+   6. DIBUJAR LAS TARJETAS DE PRODUCTO
    Recibe una lista de productos (ya filtrada) y crea el HTML
    de cada tarjeta.
    ============================================================ */
@@ -149,8 +190,7 @@ function dibujarProductos(lista) {
       <div class="product-body">
         <span class="product-category">${producto.categoria}</span>
         <h3 class="product-name">${producto.nombre}</h3>
-        <p class="product-description">${producto.descripcion}</p>
-        <ul class="product-features">${listaCaracteristicas}</ul>
+        <button class="ver-descripcion-btn" type="button">Ver descripción</button>
         <div class="product-footer">
           <span class="product-price">${formatearPrecio(producto.precio)}</span>
           <span class="stock-tag ${estadoStock.clase}">
@@ -162,6 +202,11 @@ function dibujarProductos(lista) {
         </a>
       </div>
     `;
+
+    // Conectamos el botón "Ver descripción" de ESTA tarjeta con el modal
+    tarjeta.querySelector(".ver-descripcion-btn").addEventListener("click", () => {
+      abrirModal(producto.id);
+    });
 
     elCatalogo.appendChild(tarjeta);
   });
