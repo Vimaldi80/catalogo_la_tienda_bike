@@ -8,7 +8,7 @@
   --color-ink: #0D0D0D;        /* negro del logo, para textos y fondo del header */
   --color-pink: #EC056E;       /* rosa del logo — color principal de marca */
   --color-yellow: #FECD03;     /* amarillo del logo — precios y acentos */
-  --color-paper: #DDAD9C;      /* fondo general, gris piedra cálido */
+  --color-paper: #3a1c28;      /* fondo general, gris piedra cálido */
   --color-paper-alt: #FFF3F8;  /* fondo levemente rosado (tarjetas/hover) */
   --color-stock-ok: #1E9E5A;   /* verde para "disponible" (semántico, no de marca) */
   --color-stock-out: #B0263D;  /* rojo para "agotado" */
@@ -108,10 +108,12 @@ body {
 
 .brand-eyebrow {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.12em;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.35em;
   text-transform: uppercase;
   color: var(--color-yellow);
+  margin-bottom: 2px;
 }
 
 .brand-name {
@@ -189,9 +191,10 @@ body {
 }
 
 .search-input:focus {
-  outline: 3px solid var(--color-yellow);
-  outline-offset: 1px;
+  outline: 2px solid var(--color-yellow);
+  outline-offset: 2px;
   border-color: var(--color-pink);
+  box-shadow: 0 0 0 4px rgba(236, 5, 110, 0.12);
 }
 
 .category-filters {
@@ -244,14 +247,11 @@ body {
 }
 
 .product-card {
-  background: white;
-  border: none;
+  background: #ffffff;
   border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 16px rgba(236, 5, 110, 0.12), 0 1px 3px rgba(0, 0, 0, 0.06);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border: none;
 }
 
 .product-card:hover {
@@ -567,7 +567,7 @@ body {
 .ver-descripcion-btn {
   background: none;
   border: none;
-  color: #0a66c2;
+  color: var(--color-pink);
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
@@ -578,5 +578,13 @@ body {
 }
 
 .ver-descripcion-btn:hover {
-  color: #084a8f;
+  color: #B8044F;
+}
+
+#contador-resultados {
+  color: #e8d5db;
+}
+
+#sin-resultados {
+  color: #e8d5db;
 }
