@@ -1,124 +1,218 @@
 {
-  "_comentario": "Este archivo es la 'base de datos' del catálogo. Cada objeto { } es un producto. Para agregar uno nuevo, copia un bloque completo, pégalo antes de la línea que dice ']' y cambia los valores. El campo 'id' debe ser único para cada producto (nunca repetido). Este campo _comentario no se muestra en el sitio, es solo para orientarte.",
+  "_comentario": "Base de datos del catálogo. Los productos pueden tener variantes de color y stock independiente por variante.",
 
   "categorias": [
     "Todas",
     "Herramientas",
     "Vestuario",
     "Seguridad",
-    "Niños"
+    "Niños",
+    "Accesorios"
   ],
 
-      "productos": [
-        {
+  "productos": [
+
+    {
       "id": "v001",
       "nombre": "Balaclava Pasamontaña Lycra / Outdoor / Trekking",
       "categoria": "Vestuario",
       "precio": 6990,
       "descripcion": "Balaclava térmica en lycra, protege rostro y cuello del frío y viento en salidas en bicicleta.",
-      "caracteristicas": ["Tela lycra elástica", "Transpirable", "Ajuste ergonómico al rostro"],
+      "caracteristicas": [
+        "Tela lycra elástica",
+        "Transpirable",
+        "Ajuste ergonómico al rostro"
+      ],
+      "medidas": "Talla única",
       "imagen": "assets/productos/balaclava.jpg",
       "talla": "Única",
       "color": "Negro",
       "stock": "disponible"
     },
+
     {
       "id": "s001",
       "nombre": "Candado para Bicicleta Tipo U Lock",
       "categoria": "Seguridad",
       "precio": 12990,
       "descripcion": "Candado en U de acero reforzado, ideal para asegurar tu bicicleta en la calle.",
-      "caracteristicas": ["Acero templado de alta resistencia", "Incluye 2 llaves", "Soporte de montaje incluido"],
+      "caracteristicas": [
+        "Acero templado de alta resistencia",
+        "Incluye 2 llaves",
+        "Soporte de montaje incluido"
+      ],
+      "medidas": "Consultar medidas",
       "imagen": "assets/productos/ulock_rojo.jpg",
       "talla": "",
       "color": "Plateado - Rojo",
       "stock": "disponible"
-},
-    {
-      "id": "p003",
-      "nombre": "Audífonos Bl",
-      "categoria": "Vestuario",
-      "precio": 24990,
-      "descripcion": "Audífonos con cancelación de ruido y hasta 30 horas de batería.",
-      "caracteristicas": [
-        "Bluetooth 5.3",
-        "Cancelación de ruido activa",
-        "30 horas de batería",
-        "Resistentes al agua (IPX4)"
-      ],
-      "imagen": "",
-      "stock": "pocas"
     },
+
     {
-      "id": "p004",
-      "nombre": "Cargador rápido USB-C 65W",
-      "categoria": "Vestuario",
+      "id": "h001",
+      "nombre": "Bombín BETO CRH-030PG — con manómetro",
+      "categoria": "Herramientas",
       "precio": 15990,
-      "descripcion": "Cargador compacto compatible con notebooks, celulares y tablets.",
+      "descripcion": "Bombín manual portátil BETO diseñado para inflar neumáticos de bicicleta de manera práctica y eficiente. Manómetro integrado de fácil lectura. Su diseño compacto facilita el transporte durante rutas, paseos y desplazamientos diarios",
       "caracteristicas": [
-        "Potencia: 65W",
-        "2 puertos USB-C",
-        "Compatible con carga rápida"
+        "Presión máxima: 120 PSI",
+        "Compatibilidad: válvulas Presta (fina), Schrader (tipo automóvil)",
+        "Diseño: compacto y fácil de transportar",
+        "Manómetro intehrado para monitorear la presión de inflado"
       ],
-      "imagen": "",
-      "stock": "agotado"
-    },
-    {
-      "id": "p005",
-      "nombre": "Organizador de cocina 3 niveles",
-      "categoria": "Hogar",
-      "precio": 18990,
-      "descripcion": "Organizador apilable de acero inoxidable para especias y utensilios.",
-      "caracteristicas": [
-        "Material: acero inoxidable",
-        "3 niveles",
-        "Fácil de limpiar"
-      ],
-      "imagen": "",
-      "stock": "disponible"
-    },
-    {
-      "id": "p006",
-      "nombre": "Silla ergonómica de oficina",
-      "categoria": "Oficina",
-      "precio": 89990,
-      "descripcion": "Silla con soporte lumbar ajustable y reposabrazos regulables.",
-      "caracteristicas": [
-        "Soporte lumbar ajustable",
-        "Altura regulable",
-        "Reposabrazos 3D",
-        "Carga máxima: 120kg"
-      ],
-      "imagen": "",
-      "stock": "disponible"
-    },
-    {
-      "id": "p007",
-      "nombre": "Organizador de escritorio",
-      "categoria": "Oficina",
-      "precio": 9990,
-      "descripcion": "Organizador de madera con compartimentos para papelería y accesorios.",
-      "caracteristicas": [
-        "Material: MDF",
-        "5 compartimentos",
-        "Diseño compacto"
-      ],
-      "imagen": "",
-      "stock": "disponible"
-    },
-    {
-      "id": "p008",
-      "nombre": "Lámpara LED de escritorio",
-      "categoria": "Hogar",
-      "precio": 13990,
-      "descripcion": "Lámpara regulable con 3 niveles de luz y puerto de carga USB.",
-      "caracteristicas": [
-        "3 niveles de intensidad",
-        "Puerto USB integrado",
-        "Brazo flexible"
-      ],
-      "imagen": "",
+      "medidas": "Dimensiones aproximadas: 21 × 4,5 × 2,5 cm",
+      "imagen": "assets/productos/bombin.jpg",
+      "color": "Negro",
       "stock": "pocas"
+    },
+
+    {
+      "id": "h002",
+      "nombre": "Cortacadena para Bicicleta",
+      "categoria": "Herramientas",
+      "precio": 5990,
+      "descripcion": "Diseñada para realizar trabajos de mantenimiento y reparación de la cadena de la bicicleta. Herramienta útil tanto para mantenimiento en casa como para llevar durante rutas y salidas en bicicleta.",
+      "caracteristicas": [
+        "Permite desmontar y ajustar eslabones",
+        "Útil para complementar un kit de reparación",
+        "Diseñado para bicicletas"
+      ],
+      "medidas": "",
+      "imagen": "assets/productos/cortacadena.jpg",
+      "stock": "disponible"
+    },
+
+    {
+      "id": "v002",
+      "nombre": "Cubrecalzado para Ciclismo",
+      "categoria": "Vestuario",
+      "precio": 18990,
+      "descripcion": "Cubrecalzado diseñado para utilizar sobre el calzado durante tus recorridos en bicicleta, ayudando a proteger los pies y zapatos frente a las condiciones del camino.",
+      "caracteristicas": [
+        "Material: Waterproof, resistente al agua y viento",
+        "Con micropolar en su interior que lo hace térmico y mantiene tus pies calientes"
+      ],
+      "medidas": "Talla L",
+      "variantes": [
+        {
+          "color": "Gris",
+          "codigoColor": "#808080",
+          "imagen": "assets/productos/cubrecalzado_gris.jpg",
+          "stock": "pocas"
+        },
+        {
+          "color": "Morado",
+          "codigoColor": "#8e44ad",
+          "imagen": "assets/productos/cubrecalzado_morado.jpg",
+          "stock": "pocas"
+        },
+        {
+          "color": "Color Vino",
+          "codigoColor": "#800000",
+          "imagen": "assets/productos/cubrecalzado_vino.jpg",
+          "stock": "pocas"
+        }
+
+      ]
+    },
+
+    {
+      "id": "s003",
+      "nombre": "Luz Delantera para Bicicleta con Bocina",
+      "categoria": "Seguridad",
+      "precio": 9990,
+      "descripcion": "Luz delantera con bocina integrada para mejorar la visibilidad y seguridad del ciclista.",
+      "caracteristicas": [
+        "Bocina integrada",
+        "Recarga mediante USB y sistema de carga solar",
+        "Modos de luz alto, bajo e intermitente para adaptarse a diferentes situaciones.",
+        "Flujo luminoso de 350 lúmenes"
+      ],
+      "medidas": "",
+      "imagen": "assets/productos/luz_delantera_bocina.jpg",
+      "stock": "disponible"
+    },
+
+    {
+      "id": "s004",
+      "nombre": "Bolso Kit de Reparación para Bicicleta",
+      "categoria": "Seguridad",
+      "precio": 10990,
+      "descripcion": "Kit compacto de reparación diseñado para acompañarte durante tus recorridos en bicicleta. Incluye herramientas y accesorios esenciales para realizar reparaciones básicas.",
+      "caracteristicas": [
+        "Contenido del kit: ", 
+        "Bombin: Para inflar el neumático después de una pérdida de presión o reparación. ",
+        "Parche: Para reparar pinchazos en la cámara",
+        "Llave Allen:Para realizar ajustes y mantenimiento de diferentes componentes de la bicicleta.",
+                     "Medidas: 2mm, 3mm, 4mm, 5mm, 6mm, 8mm, 10mm",
+        "Pegamento: Para adherir los parches a la cámara de aire.",
+        "Desmontadores: Para quitar y colocar los neumáticos de la llanta.",
+        "Llave para tuercas: Para ajustar o aflojar tuercas de diferentes tamaños en la bicicleta."
+      ],
+      "medidas": "",
+      "imagen": "assets/productos/bolso_reparacion.jpg",
+      "stock": "disponible"
+    },
+
+    {
+      "id": "s002",
+      "nombre": "Arnés Reflectante",
+      "categoria": "Seguridad",
+      "precio": 7990,
+      "descripcion": "Arnés reflectante ajustable diseñado para mejorar la visibilidad del ciclista durante sus desplazamientos y entrenamientos.",
+      "caracteristicas": [
+        "Material reflectante",
+        "Ajustable",
+        "Liviano",
+        "Mejora la visibilidad del ciclista"
+      ],
+      "medidas": "Talla ajustable",
+      "variantes": [
+        {
+          "color": "Rojo",
+          "codigoColor": "#e53935",
+          "imagen": "assets/productos/arnes_rojo.jpg",
+          "stock": "pocas"
+        },
+        {
+          "color": "Amarillo",
+          "codigoColor": "#ffd600",
+          "imagen": "assets/productos/arnes_amarillo.jpg",
+          "stock": "pocas"
+        },
+        {
+          "color": "Rosado",
+          "codigoColor": "#ff69b4",
+          "imagen": "assets/productos/arnes_rosado.jpg",
+          "stock": "disponible"
+        },
+        {
+          "color": "Morado",
+          "codigoColor": "#8e44ad",
+          "imagen": "assets/productos/arnes_morado.jpg",
+          "stock": "disponible"
+        },
+        {
+          "color": "Azul",
+          "codigoColor": "#1976d2",
+          "imagen": "assets/productos/arnes_azul.jpg",
+          "stock": "pocas"
+        },
+        {
+          "color": "Naranjo",
+          "codigoColor": "#ff8c00",
+          "imagen": "assets/productos/arnes_naranjo.jpg",
+          "stock": "pocas"
+        },
+        {
+          "color": "Negro",
+          "codigoColor": "#000000",
+          "imagen": "assets/productos/arnes_negro.jpg",
+          "stock": "disponible"
+        }
+      ]
     }
+
   ]
 }
+  

@@ -3,7 +3,7 @@
    Cambia este número por tu WhatsApp real, con código de país,
    sin el "+" ni espacios. Ejemplo Chile: 56 9 1234 5678 -> 56912345678
    ============================================================ */
-const WHATSAPP_NUMERO = "56930392536";
+const WHATSAPP_NUMERO = "56981540050";
 
 // Referencias a elementos del HTML que vamos a manipular
 const elCatalogo = document.getElementById("catalogo");
@@ -109,9 +109,18 @@ function obtenerEstadoStock(estado) {
    Genera un link que abre WhatsApp con un mensaje pre-escrito,
    mencionando el producto exacto que el cliente vio.
    ============================================================ */
-function crearLinkWhatsapp(producto) {
-  const mensaje = `Hola! Me interesa el producto: ${producto.nombre} (${formatearPrecio(producto.precio)})`;
+function crearLinkWhatsapp(producto, variante = null) {
+
+  let mensaje = `Hola! Me interesa el producto: ${producto.nombre}`;
+
+  if (variante) {
+    mensaje += ` - Color: ${variante.color}`;
+  }
+
+  mensaje += ` (${formatearPrecio(producto.precio)})`;
+
   const mensajeCodificado = encodeURIComponent(mensaje);
+
   return `https://wa.me/${WHATSAPP_NUMERO}?text=${mensajeCodificado}`;
 }
 
@@ -158,57 +167,342 @@ document.addEventListener("keydown", (evento) => {
 function dibujarProductos(lista) {
   elCatalogo.innerHTML = "";
 
-  // Actualiza el contador de resultados arriba de la grilla
-  elContador.textContent = `${lista.length} producto${lista.length === 1 ? "" : "s"} encontrado${lista.length === 1 ? "" : "s"}`;
+  elContador.textContent =
+    `${lista.length} producto${lista.length === 1 ? "" : "s"} encontrado${lista.length === 1 ? "" : "s"}`;
 
-  // Si no hay resultados, mostramos el mensaje de "sin resultados"
   if (lista.length === 0) {
     elSinResultados.hidden = false;
     return;
   }
+
   elSinResultados.hidden = true;
 
   lista.forEach((producto) => {
+
     const tarjeta = document.createElement("article");
     tarjeta.className = "product-card";
 
-    // Bloque de imagen: si el producto tiene foto (campo "imagen" no vacío),
-    // se muestra. Si no, se muestra un texto de aviso en vez de romper el diseño.
-    const bloqueImagen = producto.imagen
-      ? `<img src="${producto.imagen}" alt="${producto.nombre}" loading="lazy">`
+    // ---------------------------------------------------------
+    // PRODUCTOS CON VARIANTES
+    // ---------------------------------------------------------
+
+    let varianteSeleccionada = null;
+
+    if (producto.variantes && producto.variantes.length > 0) {
+      varianteSeleccionada = producto.variantes[0];
+    }
+
+    // ---------------------------------------------------------
+    // IMAGEN PRINCIPAL
+    // ---------------------------------------------------------
+
+    const imagenInicial = varianteSeleccionada
+      ? varianteSeleccionada.imagen
+      : producto.imagen;
+
+    const bloqueImagen = imagenInicial
+      ? `<img 
+          class="producto-imagen-principal"
+          src="${imagenInicial}" 
+          alt="${producto.nombre}" 
+          loading="lazy"
+        >`
       : `<div class="image-placeholder">Foto próximamente</div>`;
 
-    // Lista de características (viñetas)
-    const listaCaracteristicas = producto.caracteristicas
-      .map((item) => `<li>${item}</li>`)
-      .join("");
-      
-    const estadoStock = obtenerEstadoStock(producto.stock);
+
+    // ---------------------------------------------------------
+    // COLORES
+    // ---------------------------------------------------------
+
+    let bloqueColores = "";
+
+    if (producto.variantes && producto.variantes.length > 0) {
+
+      const botonesColores = producto.variantes.map((variante, indice) => {
+
+        const estaAgotado = variante.stock === 0;
+
+        const claseAgotado =
+          estaAgotado ? "color-agotado" : "";
+
+        const atributoDisabled =
+          estaAgotado ? "disabled" : "";
+
+        return `
+          <button
+            type="button"
+            class="color-selector ${
+              varianteSeleccionada === variante ? "color-activo" : ""
+            } ${claseAgotado}"
+            style="background-color: ${variante.codigoColor};"
+            title="${variante.color}${estaAgotado ? " - Agotado" : ""}"
+            data-producto="${producto.id}"
+            data-indice="${indice}"
+            ${atributoDisabled}
+          ></button>
+        `;
+
+    }).join("");
+
+
+      bloqueColores = `
+        <div class="variantes">
+
+          <span class="variantes-titulo">
+            Colores:
+          </span>
+
+          <div class="colores-container">
+            ${botonesColores}
+          </div>
+
+          <span class="color-seleccionado">
+            ${varianteSeleccionada.color}
+          </span>
+
+        </div>
+      `;
+    }
+
+
+    // ---------------------------------------------------------
+    // STOCK
+    // ---------------------------------------------------------
+
+    let estadoStock;
+
+    if (varianteSeleccionada) {
+
+      if (varianteSeleccionada.stock === 0) {
+
+        estadoStock = {
+          clase: "agotado",
+          texto: "Agotado"
+        };
+
+      } else if (varianteSeleccionada.stock <= 2) {
+
+        estadoStock = {
+          clase: "pocas",
+          texto: "Últimas unidades"
+        };
+
+      } else {
+
+        estadoStock = {
+          clase: "disponible",
+          texto: "Disponible"
+        };
+
+      }
+
+    } else {
+
+      estadoStock = obtenerEstadoStock(producto.stock);
+
+    }
+
+
+    // ---------------------------------------------------------
+    // TARJETA COMPLETA
+    // ---------------------------------------------------------
 
     tarjeta.innerHTML = `
-      <div class="product-image">${bloqueImagen}</div>
+
+      <div class="product-image">
+
+        ${bloqueImagen}
+
+      </div>
+
+
       <div class="product-body">
-        <span class="product-category">${producto.categoria}</span>
-        <h3 class="product-name">${producto.nombre}</h3>
-        <button class="ver-descripcion-btn" type="button">Ver descripción</button>
+
+        <span class="product-category">
+          ${producto.categoria}
+        </span>
+
+
+        <h3 class="product-name">
+          ${producto.nombre}
+        </h3>
+
+
+        <button
+          class="ver-descripcion-btn"
+          type="button"
+        >
+          Ver descripción
+        </button>
+
+
+        ${bloqueColores}
+
+
         <div class="product-footer">
-          <span class="product-price">${formatearPrecio(producto.precio)}</span>
+
+          <span class="product-price">
+            ${formatearPrecio(producto.precio)}
+          </span>
+
           <span class="stock-tag ${estadoStock.clase}">
             ${estadoStock.texto}
           </span>
+
         </div>
-        <a class="whatsapp-btn" href="${crearLinkWhatsapp(producto)}" target="_blank" rel="noopener">
+
+
+        <a
+          class="whatsapp-btn"
+          href="${crearLinkWhatsapp(producto, varianteSeleccionada)}"
+          target="_blank"
+          rel="noopener"
+        >
           Pedir por WhatsApp
         </a>
+
       </div>
+
     `;
 
-    // Conectamos el botón "Ver descripción" de ESTA tarjeta con el modal
-    tarjeta.querySelector(".ver-descripcion-btn").addEventListener("click", () => {
-      abrirModal(producto.id);
+
+    // ---------------------------------------------------------
+    // BOTÓN DESCRIPCIÓN
+    // ---------------------------------------------------------
+
+    tarjeta
+      .querySelector(".ver-descripcion-btn")
+      .addEventListener("click", () => {
+
+        abrirModal(producto.id);
+
+      });
+
+
+    // ---------------------------------------------------------
+    // BOTONES DE COLORES
+    // ---------------------------------------------------------
+
+    const botonesColor =
+      tarjeta.querySelectorAll(".color-selector");
+
+
+    botonesColor.forEach((boton) => {
+
+      boton.addEventListener("click", () => {
+
+        const indice =
+          Number(boton.dataset.indice);
+
+        const variante =
+          producto.variantes[indice];
+
+    
+    // ---------------------------------------------------------
+    // ACTUALIZAR WHATSAPP CON EL COLOR SELECCIONADO
+    // ---------------------------------------------------------
+
+        const botonWhatsapp =
+          tarjeta.querySelector(".whatsapp-btn");
+
+        if (botonWhatsapp) {
+
+          botonWhatsapp.href =
+            crearLinkWhatsapp(producto, variante);
+
+}
+
+    // ---------------------------------------------------------
+    // CAMBIAR IMAGEN
+    // ---------------------------------------------------------
+
+        const imagen =
+          tarjeta.querySelector(".producto-imagen-principal");
+
+        if (imagen) {
+
+          imagen.src =
+            variante.imagen;
+
+        }
+
+
+    // ---------------------------------------------------------
+    // CAMBIAR NOMBRE DEL COLOR
+    // ---------------------------------------------------------
+
+        const textoColor =
+          tarjeta.querySelector(".color-seleccionado");
+
+        if (textoColor) {
+
+          textoColor.textContent =
+            variante.color;
+
+        }
+
+
+    // ---------------------------------------------------------
+    // CAMBIAR STOCK
+    // ---------------------------------------------------------    // Cambiar stock
+
+        const etiquetaStock =
+          tarjeta.querySelector(".stock-tag");
+
+
+        let nuevoEstado;
+
+
+        if (variante.stock === 0) {
+
+          nuevoEstado = {
+            clase: "agotado",
+            texto: "Agotado"
+          };
+
+        } else if (variante.stock <= 2) {
+
+          nuevoEstado = {
+            clase: "pocas",
+            texto: "Últimas unidades"
+          };
+
+        } else {
+
+          nuevoEstado = {
+            clase: "disponible",
+            texto: "Disponible"
+          };
+
+        }
+
+
+        etiquetaStock.className =
+          `stock-tag ${nuevoEstado.clase}`;
+
+        etiquetaStock.textContent =
+          nuevoEstado.texto;
+
+
+    // ---------------------------------------------------------
+    // MARCAR COLOR SELECCIONADO
+    // ---------------------------------------------------------  // Marcar color seleccionado
+
+        botonesColor.forEach((b) => {
+
+          b.classList.remove("color-activo");
+
+        });
+
+        boton.classList.add("color-activo");
+
+      });
+
     });
 
+
     elCatalogo.appendChild(tarjeta);
+
   });
 }
 
