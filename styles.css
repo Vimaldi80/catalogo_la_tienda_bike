@@ -669,14 +669,6 @@ body {
     background 0.15s ease;
 }
 
-.whatsapp-btn::before {
-  content: "\ecbd";
-
-  font-family: "tabler-icons";
-
-  font-size: 16px;
-}
-
 .whatsapp-btn:hover {
   transform: translateY(-1px);
 }
@@ -957,4 +949,18 @@ body {
     transition: none !important;
   }
 
+}
+
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.whatsapp-icon {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+  flex-shrink: 0;
 }
