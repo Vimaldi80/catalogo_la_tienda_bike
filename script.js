@@ -17,11 +17,15 @@ const elModal = document.getElementById("modal-detalle");
 const elModalTitulo = document.getElementById("modal-titulo");
 const elModalDescripcion = document.getElementById("modal-descripcion");
 const elModalCaracteristicas = document.getElementById("modal-caracteristicas");
+const elModalCerrar = document.getElementById("modal-cerrar");
 
 // Estado actual de la vista (qué categoría y qué texto de búsqueda hay activos)
 let categoriaActiva = "Todas";
 let textoBusqueda = "";
 let todosLosProductos = []; // se llena al cargar products.json
+// Guarda qué variante (color) tiene seleccionada cada producto en pantalla.
+// Ejemplo: { "s002": 2 } significa "el producto s002 tiene elegida la variante índice 2"
+const varianteSeleccionada = {};
 
 /* ============================================================
    1. CARGAR LOS DATOS
@@ -104,23 +108,20 @@ function obtenerEstadoStock(estado) {
   return estados[estado] || estados.agotado;
 }
 
+
+
 /* ============================================================
    4. CREAR EL LINK DE WHATSAPP PARA UN PRODUCTO
    Genera un link que abre WhatsApp con un mensaje pre-escrito,
    mencionando el producto exacto que el cliente vio.
    ============================================================ */
-function crearLinkWhatsapp(producto, variante = null) {
-
-  let mensaje = `Hola! Me interesa el producto: ${producto.nombre}`;
-
-  if (variante) {
-    mensaje += ` - Color: ${variante.color}`;
+function crearLinkWhatsapp(producto, variante) {
+  let mensaje = `Hola! Me interesa el producto: ${producto.nombre} (${formatearPrecio(producto.precio)})`;
+  if (variante && variante.color) {
+    mensaje += ` — Color: ${variante.color}`;
   }
 
-  mensaje += ` (${formatearPrecio(producto.precio)})`;
-
   const mensajeCodificado = encodeURIComponent(mensaje);
-
   return `https://wa.me/${WHATSAPP_NUMERO}?text=${mensajeCodificado}`;
 }
 
@@ -147,7 +148,7 @@ function cerrarModal() {
 }
 
 // Cerrar con el botón "✕"
-document.getElementById("modal-cerrar").addEventListener("click", cerrarModal);
+elModalCerrar.addEventListener("click", cerrarModal);
 
 // Cerrar al hacer clic fuera de la caja (en el fondo oscuro)
 elModal.addEventListener("click", (evento) => {
@@ -218,32 +219,44 @@ function dibujarProductos(lista) {
 
     if (producto.variantes && producto.variantes.length > 0) {
 
-      const botonesColores = producto.variantes.map((variante, indice) => {
+            const botonesColores = producto.variantes.map((variante, indice) => {
 
-        const estaAgotado = variante.stock === 0;
+        const estaAgotado = variante.stock === "agotado";
+        const claseAgotado = estaAgotado ? "color-agotado" : "";
+        const atributoDisabled = estaAgotado ? "disabled" : "";
+        const esActivo = varianteSeleccionada === variante ? "color-activo" : "";
+        const etiqueta = variante.color || variante.kit || "";
 
-        const claseAgotado =
-          estaAgotado ? "color-agotado" : "";
+        // Si tiene código de color, dibuja el círculo de color de siempre
+        if (variante.codigoColor) {
+          return `
+            <button
+              type="button"
+              class="color-selector ${esActivo} ${claseAgotado}"
+              style="background-color: ${variante.codigoColor};"
+              title="${etiqueta}${estaAgotado ? " - Agotado" : ""}"
+              data-producto="${producto.id}"
+              data-indice="${indice}"
+              ${atributoDisabled}
+            ></button>
+          `;
+        }
 
-        const atributoDisabled =
-          estaAgotado ? "disabled" : "";
-
+        // Si NO tiene color (ej: "Kit 01", "Kit 02"), dibuja un botón de texto
         return `
           <button
             type="button"
-            class="color-selector ${
-              varianteSeleccionada === variante ? "color-activo" : ""
-            } ${claseAgotado}"
-            style="background-color: ${variante.codigoColor};"
-            title="${variante.color}${estaAgotado ? " - Agotado" : ""}"
+            class="variante-texto-selector ${esActivo} ${claseAgotado}"
+            title="${etiqueta}${estaAgotado ? " - Agotado" : ""}"
             data-producto="${producto.id}"
             data-indice="${indice}"
             ${atributoDisabled}
-          ></button>
+          >${etiqueta}</button>
         `;
 
     }).join("");
 
+            const etiquetaVarianteInicial = varianteSeleccionada.color || varianteSeleccionada.kit || "";
 
       bloqueColores = `
         <div class="variantes">
@@ -257,7 +270,7 @@ function dibujarProductos(lista) {
           </div>
 
           <span class="color-seleccionado">
-            ${varianteSeleccionada.color}
+            ${etiquetaVarianteInicial}
           </span>
 
         </div>
@@ -272,36 +285,10 @@ function dibujarProductos(lista) {
     let estadoStock;
 
     if (varianteSeleccionada) {
-
-      if (varianteSeleccionada.stock === 0) {
-
-        estadoStock = {
-          clase: "agotado",
-          texto: "Agotado"
-        };
-
-      } else if (varianteSeleccionada.stock <= 2) {
-
-        estadoStock = {
-          clase: "pocas",
-          texto: "Últimas unidades"
-        };
-
-      } else {
-
-        estadoStock = {
-          clase: "disponible",
-          texto: "Disponible"
-        };
-
-      }
-
+      estadoStock = obtenerEstadoStock(varianteSeleccionada.stock);
     } else {
-
       estadoStock = obtenerEstadoStock(producto.stock);
-
     }
-
 
     // ---------------------------------------------------------
     // TARJETA COMPLETA
@@ -393,8 +380,8 @@ function dibujarProductos(lista) {
     // BOTONES DE COLORES
     // ---------------------------------------------------------
 
-    const botonesColor =
-      tarjeta.querySelectorAll(".color-selector");
+        const botonesColor =
+      tarjeta.querySelectorAll(".color-selector, .variante-texto-selector");
 
 
     botonesColor.forEach((boton) => {
@@ -447,52 +434,24 @@ function dibujarProductos(lista) {
         if (textoColor) {
 
           textoColor.textContent =
-            variante.color;
-
+             variante.color || variante.kit || "";
         }
 
 
-    // ---------------------------------------------------------
+        // ---------------------------------------------------------
     // CAMBIAR STOCK
-    // ---------------------------------------------------------    // Cambiar stock
+    // ---------------------------------------------------------
 
         const etiquetaStock =
           tarjeta.querySelector(".stock-tag");
 
-
-        let nuevoEstado;
-
-
-        if (variante.stock === 0) {
-
-          nuevoEstado = {
-            clase: "agotado",
-            texto: "Agotado"
-          };
-
-        } else if (variante.stock <= 2) {
-
-          nuevoEstado = {
-            clase: "pocas",
-            texto: "Últimas unidades"
-          };
-
-        } else {
-
-          nuevoEstado = {
-            clase: "disponible",
-            texto: "Disponible"
-          };
-
-        }
-
+        const nuevoEstado = obtenerEstadoStock(variante.stock);
 
         etiquetaStock.className =
           `stock-tag ${nuevoEstado.clase}`;
 
         etiquetaStock.textContent =
           nuevoEstado.texto;
-
 
     // ---------------------------------------------------------
     // MARCAR COLOR SELECCIONADO

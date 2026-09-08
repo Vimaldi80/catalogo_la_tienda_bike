@@ -246,17 +246,17 @@
       "variantes": [
         {
           "kit": "Kit reparación 01",
-          "imagen": "assets/productos/kit_reparacion_01.jpg",
+          "imagen": "assets/productos/kit_reparacion_pinchazo_01.jpg",
           "stock": "pocas"
         },
         {
           "kit": "Kit reparación 02",
-          "imagen": "assets/productos/kit_reparacion_02.jpg",
+          "imagen": "assets/productos/kit_reparacion_pinchazo_02.jpg",
           "stock": "disponible"
         },
         {
           "kit": "Kit reparación 03",
-          "imagen": "assets/productos/kit_reparacion_03.jpg",
+          "imagen": "assets/productos/kit_reparacion_pinchazo_03.jpg",
           "stock": "disponible"
         }
       ]
@@ -277,7 +277,7 @@
         "Tiempo de Uso: Hasta 8 Hrs."     
      ],
       "medidas": " Para diámetro entre 12mm-32mm, Bicicleta, Triciclos,  Scooters y muchos más",
-      "imagen": "assets/productos/luz_trasera_usb.jpg",
+      "imagen": "assets/productos/luz_trasera_roja_economica.jpg",
       "stock": "disponible"
     },
 
@@ -296,7 +296,7 @@
         "Tiempo de Uso: Hasta 8 Hrs."     
      ],
       "medidas": " Para diámetro entre 12mm-32mm, Bicicleta, Triciclos,  Scooters y muchos más",
-      "imagen": "assets/productos/luz_delantera_usb.jpg",
+      "imagen": "assets/productos/luz_delantera_blanca_economica.jpg",
       "stock": "disponible"
     }
 
