@@ -7,7 +7,8 @@
     "Vestuario",
     "Seguridad",
     "Niños",
-    "Accesorios"
+    "Accesorios",
+    "Alianzas"
   ],
 
   "productos": [
@@ -211,6 +212,92 @@
           "stock": "disponible"
         }
       ]
+    },
+
+    {
+      "id": "v003",
+      "nombre": "Bandanas",
+      "categoria": "Vestuario",
+      "precio": 1500,
+      "descripcion": "Bandana de cuello tubular diseñada para cubrir el cuello y rostro frente al viento y las bajas temperatura en actividades al aire libre",
+      "caracteristicas": [
+        "Diseño tubular sin costuras.", 
+        "Material: 100% microfibra de poliéster.",
+        "Tela transpirable.",
+        "Lavable, secar al aire, no planchar"
+     ],
+      "medidas": "Tamaño aproximado: 47 x 25 cm.",
+      "imagen": "assets/productos/bandana_variedad.jpg",
+      "stock": "disponible"
+    },
+    {
+      "id": "h003",
+      "nombre": "Kit Reparación Pinchazos",
+      "categoria": "Herramientas",
+      "precio": 5000,
+      "descripcion": "Kit de reparación para bicicleta diseñado para realizar reparaciones básicas ante pinchazos o pequeños imprevistos durante el recorrido.",
+      "caracteristicas": [
+        "Formato compacto y fácil de transportar.", 
+        "Pensado para reparaciones básicas durante el recorrido.",
+        "Incluye parches, pegamento, desmontadores, lija, llave tuercas.",
+        "Fácil de usar e ideal para situaciones de emergencia."
+     ],
+      "medidas": "Talla ajustable",
+      "variantes": [
+        {
+          "kit": "Kit reparación 01",
+          "imagen": "assets/productos/kit_reparacion_01.jpg",
+          "stock": "pocas"
+        },
+        {
+          "kit": "Kit reparación 02",
+          "imagen": "assets/productos/kit_reparacion_02.jpg",
+          "stock": "disponible"
+        },
+        {
+          "kit": "Kit reparación 03",
+          "imagen": "assets/productos/kit_reparacion_03.jpg",
+          "stock": "disponible"
+        }
+      ]
+    },
+    
+    {
+      "id": "s005",
+      "nombre": "Luz Trasera, recarga USB",
+      "categoria": "Seguridad",
+      "precio": 3590,
+      "descripcion": "Luz Led para bicicleta recargable mediante USB, diseñada para mejorar la visibilidad del ciclista durante sus desplazamientos y entrenamientos.",
+      "caracteristicas": [
+        "Contiene: 1. Luz / 2. Elástico de anclaje / 1. Cable USB.",
+        "Material: Plástico.", 
+        "Color: Roja - Trasera.",
+        "Potencia: 15 Lúmenes.",
+        "Modos de Iluminación: 4 modos (Parpadeo Lento/Flash Rápido/SOS/Modo de Luz Constante).",
+        "Tiempo de Uso: Hasta 8 Hrs."     
+     ],
+      "medidas": " Para diámetro entre 12mm-32mm, Bicicleta, Triciclos,  Scooters y muchos más",
+      "imagen": "assets/productos/luz_trasera_usb.jpg",
+      "stock": "disponible"
+    },
+
+    {
+      "id": "s006",
+      "nombre": "Luz Delantera, recarga USB",
+      "categoria": "Seguridad",
+      "precio": 3590,
+      "descripcion": "Luz Led para bicicleta recargable mediante USB, diseñada para mejorar la visibilidad del ciclista durante sus desplazamientos y entrenamientos.",
+      "caracteristicas": [
+        "Contiene: 1. Luz / 2. Elástico de anclaje / 1. Cable USB.",
+        "Material: Plástico.", 
+        "Color: Blanca - Delantera.",
+        "Potencia: 15 Lúmenes.",
+        "Modos de Iluminación: 4 modos (Parpadeo Lento/Flash Rápido/SOS/Modo de Luz Constante).",
+        "Tiempo de Uso: Hasta 8 Hrs."     
+     ],
+      "medidas": " Para diámetro entre 12mm-32mm, Bicicleta, Triciclos,  Scooters y muchos más",
+      "imagen": "assets/productos/luz_delantera_usb.jpg",
+      "stock": "disponible"
     }
 
   ]
