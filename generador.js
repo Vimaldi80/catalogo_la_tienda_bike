@@ -18,6 +18,76 @@ const btnCopiar = document.getElementById("btnCopiar");
 const btnLimpiar = document.getElementById("btnLimpiar");
 const elResultado = document.getElementById("resultado");
 
+const campoTieneVariantes = document.getElementById("campo-tiene-variantes");
+const bloqueSimple = document.getElementById("bloque-simple");
+const bloqueVariantes = document.getElementById("bloque-variantes");
+const listaVariantes = document.getElementById("lista-variantes");
+const btnAgregarVariante = document.getElementById("btnAgregarVariante");
+
+/* ============================================================
+   MOSTRAR/OCULTAR SEGÚN EL CHECKBOX
+   Si el producto tiene variantes, ocultamos los campos
+   simples (imagen/talla/color/stock únicos) y mostramos la
+   lista de variantes en su lugar.
+   ============================================================ */
+campoTieneVariantes.addEventListener("change", () => {
+  if (campoTieneVariantes.checked) {
+    bloqueSimple.style.display = "none";
+    bloqueVariantes.style.display = "block";
+    // Si activa variantes y todavía no hay ninguna fila, agrega la primera automáticamente
+    if (listaVariantes.children.length === 0) {
+      agregarFilaVariante();
+    }
+  } else {
+    bloqueSimple.style.display = "block";
+    bloqueVariantes.style.display = "none";
+  }
+});
+
+/* ============================================================
+   CREAR UNA FILA DE VARIANTE
+   Cada fila junta 4 campos: nombre (color o kit), código de
+   color (opcional, solo si es un color de verdad), nombre de
+   la foto, y su propio stock — igual que en products.json.
+   ============================================================ */
+let contadorFilas = 0;
+
+function agregarFilaVariante() {
+  contadorFilas++;
+  const fila = document.createElement("div");
+  fila.className = "fila-variante";
+  fila.style.cssText = "border:1px solid #ccc; border-radius:8px; padding:10px; margin-bottom:10px; background:white;";
+
+  fila.innerHTML = `
+    <label>Nombre (color o versión, ej: "Rojo" o "Kit reparación 01")</label>
+    <input type="text" class="variante-nombre" placeholder="Rojo">
+
+    <label>Código de color (opcional, solo si es un color real, ej: #e53935)</label>
+    <input type="text" class="variante-codigo-color" placeholder="#e53935">
+
+    <label>Nombre de la foto</label>
+    <input type="text" class="variante-imagen" placeholder="producto_rojo.jpg">
+
+    <label>Stock de esta variante</label>
+    <select class="variante-stock">
+      <option value="disponible">Disponible</option>
+      <option value="pocas">Últimas unidades</option>
+      <option value="agotado">Agotado</option>
+    </select>
+
+    <button type="button" class="btn-eliminar-variante" style="background:#A64B33; margin-top:8px; padding:6px 12px; font-size:12px;">Eliminar esta variante</button>
+  `;
+
+  // El botón "Eliminar" de cada fila borra SOLO esa fila (busca su propio padre)
+  fila.querySelector(".btn-eliminar-variante").addEventListener("click", () => {
+    fila.remove();
+  });
+
+  listaVariantes.appendChild(fila);
+}
+
+btnAgregarVariante.addEventListener("click", agregarFilaVariante);
+
 /* ============================================================
    MEMORIA DE CÓDIGOS POR CATEGORÍA
    Usamos localStorage: una "memoria" que el navegador guarda
@@ -89,7 +159,7 @@ function armarListaCaracteristicas(texto) {
    ============================================================ */
 btnGenerar.addEventListener("click", () => {
 
-  // Armamos el objeto del producto
+  // Datos que TODO producto tiene, tenga o no variantes
   const producto = {
     id: campoId.value.trim(),
     nombre: campoNombre.value.trim(),
@@ -98,32 +168,70 @@ btnGenerar.addEventListener("click", () => {
     descripcion: campoDescripcion.value.trim(),
     caracteristicas: armarListaCaracteristicas(campoCaracteristicas.value),
     medidas: campoMedidas.value.trim(),
-    imagen: armarRutaImagen(campoImagen.value),
-    talla: campoTalla.value.trim(),
-    color: campoColor.value.trim(),
-    stock: campoStock.value,
   };
 
-  // Validación simple: avisa si falta lo esencial, antes de generar código con errores
+  if (campoTieneVariantes.checked) {
+    // ---------------------------------------------------------
+    // PRODUCTO CON VARIANTES: junta cada fila en una lista
+    // ---------------------------------------------------------
+    const filas = listaVariantes.querySelectorAll(".fila-variante");
+    const variantes = [];
+
+    filas.forEach((fila) => {
+      const nombreVariante = fila.querySelector(".variante-nombre").value.trim();
+      const codigoColor = fila.querySelector(".variante-codigo-color").value.trim();
+      const imagenVariante = fila.querySelector(".variante-imagen").value.trim();
+      const stockVariante = fila.querySelector(".variante-stock").value;
+
+      // Ignora filas vacías (por si agregaste una de más sin llenarla)
+      if (nombreVariante === "") return;
+
+      const variante = {
+        color: nombreVariante,
+        imagen: armarRutaImagen(imagenVariante),
+        stock: stockVariante,
+      };
+
+      // El código de color solo se agrega si lo llenaste (es opcional)
+      if (codigoColor !== "") {
+        variante.codigoColor = codigoColor;
+      }
+
+      variantes.push(variante);
+    });
+
+    if (variantes.length === 0) {
+      elResultado.textContent = "⚠️ Marcaste 'tiene variantes' pero no llenaste ninguna fila.";
+      return;
+    }
+
+    producto.variantes = variantes;
+
+  } else {
+    // ---------------------------------------------------------
+    // PRODUCTO SIMPLE: los campos de siempre
+    // ---------------------------------------------------------
+    producto.imagen = armarRutaImagen(campoImagen.value);
+    producto.talla = campoTalla.value.trim();
+    producto.color = campoColor.value.trim();
+    producto.stock = campoStock.value;
+  }
+
+  // Validación simple: avisa si falta lo esencial
   if (!producto.id || !producto.nombre || !producto.precio) {
     elResultado.textContent = "⚠️ Falta llenar ID, Nombre o Precio — esos 3 son obligatorios.";
     return;
   }
 
-  // JSON.stringify convierte el objeto a texto, con 2 espacios de sangría (el "2" del final)
   const textoGenerado = JSON.stringify(producto, null, 2);
-
   elResultado.textContent = textoGenerado + ",";
-  // (el "," al final es porque este bloque va a ir DENTRO de una lista junto a otros productos)
 
-  // Actualiza la memoria: guarda el número que se acaba de usar para esta categoría
+  // Actualiza la memoria de IDs (igual que antes)
   const prefijo = PREFIJOS_CATEGORIA[producto.categoria] || "x";
   const numeroUsado = parseInt(producto.id.replace(prefijo, ""), 10);
 
   if (!isNaN(numeroUsado)) {
     const contadores = obtenerContadores();
-    // Solo actualiza si el número usado es MAYOR al que ya tenía guardado
-    // (por si alguna vez escribes un código manual más bajo, no retrocede la memoria)
     if (!contadores[prefijo] || numeroUsado > contadores[prefijo]) {
       contadores[prefijo] = numeroUsado;
       guardarContadores(contadores);
@@ -164,6 +272,11 @@ btnLimpiar.addEventListener("click", () => {
   campoTalla.value = "";
   campoColor.value = "";
   campoStock.selectedIndex = 0;
+
+  campoTieneVariantes.checked = false;
+  bloqueSimple.style.display = "block";
+  bloqueVariantes.style.display = "none";
+  listaVariantes.innerHTML = "";
 
   elResultado.textContent = "Acá va a aparecer el código generado...";
 

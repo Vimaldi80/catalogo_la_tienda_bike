@@ -95,21 +95,35 @@
   <label for="campo-medidas">Medidas (opcional, deja vacío si no aplica)</label>
   <input type="text" id="campo-medidas" placeholder="Ej: 21 x 4,5 x 2,5 cm">
 
-  <label for="campo-imagen">Nombre del archivo de foto (debe estar en assets/productos/)</label>
-  <input type="text" id="campo-imagen" placeholder="guantes.jpg">
+    <label style="display:flex; align-items:center; gap:8px; margin-top:20px; font-weight:normal;">
+    <input type="checkbox" id="campo-tiene-variantes" style="width:auto;">
+    Este producto tiene varias opciones (colores, tallas o kits distintos)
+  </label>
 
-  <label for="campo-talla">Talla (opcional)</label>
-  <input type="text" id="campo-talla" placeholder="Única / M / L, etc.">
+  <!-- Se muestra cuando el producto NO tiene variantes: una sola foto/talla/color/stock -->
+  <div id="bloque-simple">
+    <label for="campo-imagen">Nombre del archivo de foto (debe estar en assets/productos/)</label>
+    <input type="text" id="campo-imagen" placeholder="guantes.jpg">
 
-  <label for="campo-color">Color (opcional)</label>
-  <input type="text" id="campo-color" placeholder="Negro">
+    <label for="campo-talla">Talla (opcional)</label>
+    <input type="text" id="campo-talla" placeholder="Única / M / L, etc.">
 
-  <label for="campo-stock">Stock</label>
-  <select id="campo-stock">
-    <option value="disponible">Disponible</option>
-    <option value="pocas">Últimas unidades</option>
-    <option value="agotado">Agotado</option>
-  </select>
+    <label for="campo-color">Color (opcional)</label>
+    <input type="text" id="campo-color" placeholder="Negro">
+
+    <label for="campo-stock">Stock</label>
+    <select id="campo-stock">
+      <option value="disponible">Disponible</option>
+      <option value="pocas">Últimas unidades</option>
+      <option value="agotado">Agotado</option>
+    </select>
+  </div>
+
+  <!-- Se muestra cuando el producto SÍ tiene variantes: una fila por cada color/talla/kit -->
+  <div id="bloque-variantes" style="display:none;">
+    <div id="lista-variantes"></div>
+    <button id="btnAgregarVariante" type="button" style="background:#2F5D55;">+ Agregar variante</button>
+  </div>
 
   <button id="btnGenerar" type="button">Generar código</button>
 

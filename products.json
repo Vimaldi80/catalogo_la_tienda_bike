@@ -300,21 +300,31 @@
       "stock": "disponible"
     },
     {
-      "id": "a001",
+      "id": "ac001",
       "nombre": "Porta Caramagiola",
       "categoria": "Accesorios",
-      "precio": 5500,
-      "descripcion": "Porta botella para bicicleta con sistema de fijación ajustable, cuenta con estructura metálica para sujetar la botella y base de plástico, se debe ocupar los tornillos que tenga la bici para sujertarlo,",
+      "precio": 4990,
+      "descripcion": "Porta botella para bicicleta con sistema de fijación ajustable, cuenta con estructura metálica para sujetar la botella y base de plástico, se debe ocupar los tornillos que tenga la bici para sujertarlo.",
       "caracteristicas": [
-        "Material: plástico + aleación de aluminio",
-        "Peso: aproximadamente 56g",
-        "Embalaje: 1 porta botellas (SIN TORNILLOS DE MONTAJE)"
+        "Material: plástico + aleación de aluminio.",
+        "Peso: aproximadamente 56g.",
+        "Embalaje: 1 porta botellas (SIN TORNILLOS DE MONTAJE)."
       ],
       "medidas": "Dimensiones: 16.5cm de alto x 7.6cm de ancho x 7.4cm de profundidad.",
-      "imagen": "assets/productos/portacaramagola_extendible_negro.jpg",
-      "talla": "",
-      "color": "Negro",
-      "stock": "disponible"
+      "variantes": [
+        {
+          "color": "Plateado",
+          "imagen": "assets/productos/portacaramagiola_simple_plateado.jpg",
+          "stock": "disponible",
+          "codigoColor": "#C0C0C0"
+        },
+        {
+          "color": "Negro",
+          "imagen": "assets/productos/portacaramagiola_simple_negro.jpg",
+          "stock": "disponible",
+          "codigoColor": "#000000"
+        }
+      ]
     },
 
     {
