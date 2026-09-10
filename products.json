@@ -245,17 +245,17 @@
       "medidas": "Talla ajustable",
       "variantes": [
         {
-          "kit": "Kit reparación 01",
+          "kit": "Kit N° 01",
           "imagen": "assets/productos/kit_reparacion_pinchazo_01.jpg",
           "stock": "pocas"
         },
         {
-          "kit": "Kit reparación 02",
+          "kit": "Kit N° 02",
           "imagen": "assets/productos/kit_reparacion_pinchazo_02.jpg",
           "stock": "disponible"
         },
         {
-          "kit": "Kit reparación 03",
+          "kit": "Kit N° 03",
           "imagen": "assets/productos/kit_reparacion_pinchazo_03.jpg",
           "stock": "disponible"
         }
@@ -297,6 +297,77 @@
      ],
       "medidas": " Para diámetro entre 12mm-32mm, Bicicleta, Triciclos,  Scooters y muchos más",
       "imagen": "assets/productos/luz_delantera_blanca_economica.jpg",
+      "stock": "disponible"
+    },
+    {
+      "id": "a001",
+      "nombre": "Porta Caramagiola",
+      "categoria": "Accesorios",
+      "precio": 5500,
+      "descripcion": "Porta botella para bicicleta con sistema de fijación ajustable, cuenta con estructura metálica para sujetar la botella y base de plástico, se debe ocupar los tornillos que tenga la bici para sujertarlo,",
+      "caracteristicas": [
+        "Material: plástico + aleación de aluminio",
+        "Peso: aproximadamente 56g",
+        "Embalaje: 1 porta botellas (SIN TORNILLOS DE MONTAJE)"
+      ],
+      "medidas": "Dimensiones: 16.5cm de alto x 7.6cm de ancho x 7.4cm de profundidad.",
+      "imagen": "assets/productos/portacaramagola_extendible_negro.jpg",
+      "talla": "",
+      "color": "Negro",
+      "stock": "disponible"
+    },
+
+    {
+      "id": "a002",
+      "nombre": "Soporte Bicicleta",
+      "categoria": "Accesorios",
+      "precio": 8989,
+      "descripcion": "Soporte de pared vertical para bicicleta,  solo tienes que llegar con la bicicleta, levantarla con las manos, apoyar las ruedas sobre los ganchos y bloquearlas. ¡Listo!",
+      "caracteristicas": [
+        "Material: Fierro / ABS",
+        "Puntos de montaje: 4",
+        "Color: Negro",
+        "Apto para todos los modelos de Bicicleta"
+      ],
+      "medidas": "Tamaño: 370 mm x 80mm",
+      "imagen": "assets/productos/soporte_bicicleta.jpg",
+      "talla": "",
+      "color": "Negro",
+      "stock": "disponible"
+    },
+
+    {
+      "id": "a003",
+      "nombre": "Bolso bajo sillin impermeable",
+      "categoria": "Accesorios",
+      "precio": 15990,
+      "descripcion": "Bolso Bicicleta Sillin Impermeable, su diseño aerodinámico permiten que el bolso se integre de manera óptima a tu bicicleta. Las correas de ajuste firme, antifricción y antiresbalamiento aseguran que el bolso se mantenga en su lugar durante todo el recorrido. Además, los broches robustos garantizan un sostenimiento seguro y confiable.",
+      "caracteristicas": [
+        "Material: Poliéster/TPU",
+        "Capacidad: 2L",
+        "Resistente al agua"
+      ],
+      "medidas": "Medidas: Largo 23 cm, Ancho 17 cm",
+      "imagen": "assets/productos/bolso_impermeable_sillin.jpg",
+      "talla": "",
+      "color": "Negro",
+      "stock": "disponible"
+    },
+
+    {
+      "id": "a004",
+      "nombre": "Bolso sillin",
+      "categoria": "Accesorios",
+      "precio": 10990,
+      "descripcion": "Bolso Sillín para Bicicleta \nTiene alta resistencia al desgarro y evita daños por fricción, lo que garantiza que la bolsa de sillín dure mucho tiempo.\nVisibilidad nocturna: El logotipo y las correas tiene bandas reflectantes ayudan a aumentar la visibilidad nocturna\nFácil de instalar: Contiene 2 correas de pegado y una hebilla de goma simplifica el sistema de montaje,",
+      "caracteristicas": [
+        "Material: Pu/poliéster",
+        "Peso: 80 g"
+      ],
+      "medidas": "Medidas: Largo 17 cm Ancho 9.5 cm",
+      "imagen": "assets/productos/bolso_sillin_rojo.JPG",
+      "talla": "",
+      "color": "Rojo",
       "stock": "disponible"
     }
 

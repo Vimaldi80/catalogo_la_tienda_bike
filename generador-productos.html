@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generador de Productos — La Tienda Bike</title>
+  <style>
+    /* Estilos simples, solo para que el formulario sea cómodo de usar.
+       No necesita verse "bonito" como el catálogo, es una herramienta interna. */
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 24px;
+      background: #F4EFE9;
+      color: #0D0D0D;
+    }
+    h1 { font-size: 22px; margin-bottom: 4px; }
+    p.subtitulo { color: #555; margin-bottom: 24px; font-size: 14px; }
+    label {
+      display: block;
+      font-weight: bold;
+      font-size: 13px;
+      margin-top: 14px;
+      margin-bottom: 4px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    textarea { resize: vertical; }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background: #EC056E;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #resultado {
+      margin-top: 20px;
+      padding: 12px;
+      background: #0D0D0D;
+      color: #FECD03;
+      font-family: monospace;
+      font-size: 12.5px;
+      white-space: pre-wrap;
+      border-radius: 8px;
+      min-height: 100px;
+    }
+    #btnCopiar {
+      background: #1E9E5A;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Generador de Productos</h1>
+  <p class="subtitulo">Llena los datos y al final te doy el código listo para pegar en products.json</p>
+
+  <label for="campo-id">ID (código único, ej: h004)</label>
+  <input type="text" id="campo-id" placeholder="h004">
+
+  <label for="campo-nombre">Nombre del producto</label>
+  <input type="text" id="campo-nombre" placeholder="Ej: Guantes de Ciclismo">
+
+  <label for="campo-categoria">Categoría</label>
+  <select id="campo-categoria">
+    <option value="Herramientas">Herramientas</option>
+    <option value="Vestuario">Vestuario</option>
+    <option value="Seguridad">Seguridad</option>
+    <option value="Niños">Niños</option>
+    <option value="Accesorios">Accesorios</option>
+    <option value="Alianzas">Alianzas</option>
+  </select>
+
+  <label for="campo-precio">Precio (solo número, sin puntos ni $)</label>
+  <input type="number" id="campo-precio" placeholder="6990">
+
+  <label for="campo-descripcion">Descripción</label>
+  <textarea id="campo-descripcion" rows="3" placeholder="Descripción completa del producto..."></textarea>
+
+  <label for="campo-caracteristicas">Características (una por línea)</label>
+  <textarea id="campo-caracteristicas" rows="4" placeholder="Material: Lycra&#10;Color: Negro&#10;Talla única"></textarea>
+
+  <label for="campo-medidas">Medidas (opcional, deja vacío si no aplica)</label>
+  <input type="text" id="campo-medidas" placeholder="Ej: 21 x 4,5 x 2,5 cm">
+
+  <label for="campo-imagen">Nombre del archivo de foto (debe estar en assets/productos/)</label>
+  <input type="text" id="campo-imagen" placeholder="guantes.jpg">
+
+  <label for="campo-talla">Talla (opcional)</label>
+  <input type="text" id="campo-talla" placeholder="Única / M / L, etc.">
+
+  <label for="campo-color">Color (opcional)</label>
+  <input type="text" id="campo-color" placeholder="Negro">
+
+  <label for="campo-stock">Stock</label>
+  <select id="campo-stock">
+    <option value="disponible">Disponible</option>
+    <option value="pocas">Últimas unidades</option>
+    <option value="agotado">Agotado</option>
+  </select>
+
+  <button id="btnGenerar" type="button">Generar código</button>
+
+    <div id="resultado">Acá va a aparecer el código generado...</div>
+  <button id="btnCopiar" type="button">Copiar código</button>
+  <button id="btnLimpiar" type="button" style="background:#8A8570;">Nuevo producto (limpiar formulario)</button>
+
+  <script src="generador.js"></script>
+</body>
+</html>
