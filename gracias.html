@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Gracias por tu compra! — La Tienda Bike</title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+  
+<body style="background: var(--color-paper); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px;">
+  <div style="background: #fff; border-radius: 14px; padding: 40px 28px; max-width: 520px; text-align: center;">
+
+    <div style="font-size: 56px; margin-bottom: 8px;">🚴‍♀️✅</div>
+
+    <h1 style="font-family: var(--font-display); font-size: 30px; margin-bottom: 10px;" id="titulo-gracias">
+      ¡Gracias por tu compra!
+    </h1>
+
+    <p style="color: #555; font-size: 15px; margin-bottom: 20px; line-height: 1.5;">
+      Tu pago fue confirmado con éxito. En <strong>La Tienda Bike</strong> preparamos tu pedido con cariño,
+      revisando cada producto antes de enviarlo, para que llegue en perfectas condiciones y puedas disfrutarlo
+      en tu próxima salida en bicicleta.
+    </p>
+
+    <div style="background: var(--color-paper-alt); border-radius: 10px; padding: 16px; text-align: left; margin-bottom: 24px; font-size: 14px; color: #444;">
+      <strong style="display:block; margin-bottom:6px;">¿Qué sigue ahora?</strong>
+      1. Te contactaremos por WhatsApp para confirmar los detalles de tu despacho.<br>
+      2. Prepararemos tu pedido y te avisaremos cuando salga.<br>
+      3. Recibirás tu paquete en la dirección indicada.
+    </div>
+
+    <a href="https://wa.me/56981540050" target="_blank" rel="noopener"
+       style="display: inline-block; background: var(--color-ink); color: var(--color-yellow); padding: 13px 26px; border-radius: 9px; text-decoration: none; font-weight: 700; margin-bottom: 18px; font-size: 15px;">
+      💬 Escríbenos por WhatsApp
+    </a>
+
+    <p style="font-size: 13px; color: #888; margin-bottom: 6px;">
+      Si tienes cualquier duda sobre tu pedido, no dudes en contactarnos.
+    </p>
+
+    <a href="/" style="color: var(--color-pink); font-size: 14px; font-weight: 600;">← Volver al catálogo</a>
+
+  </div>
+  <script>
+    const nombre = localStorage.getItem("ultimoPedidoNombre");
+    if (nombre) {
+      const primerNombre = nombre.trim().split(" ")[0];
+      document.getElementById("titulo-gracias").textContent = `¡Gracias por tu compra, ${primerNombre}!`;
+      localStorage.removeItem("ultimoPedidoNombre");
+    }
+  </script>  
+</body>
+</html>

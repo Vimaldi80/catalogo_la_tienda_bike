@@ -41,6 +41,8 @@ async function cargarProductos() {
     const datos = await respuesta.json();
 
     todosLosProductos = datos.productos;
+    cargarCarrito();
+    dibujarCarrito();
 
     dibujarFiltrosCategoria(datos.categorias);
     dibujarProductos(todosLosProductos);
@@ -339,26 +341,16 @@ function dibujarProductos(lista) {
         </div>
 
 
-        <a
-          class="whatsapp-btn"
-          href="${crearLinkWhatsapp(producto, varianteSeleccionada)}"
-          target="_blank"
-          rel="noopener"
+        <button
+          class="add-cart-btn"
+          type="button"
+          ${estaAgotado(producto, varianteSeleccionada) ? "disabled" : ""}
         >
-           <svg
-              class="whatsapp-icon"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                d="M20.52 3.48A11.87 11.87 0 0 0 12.05 0C5.49 0 .16 5.33.16 11.89c0 2.1.55 4.15 1.6 5.96L.05 24l6.3-1.65a11.85 11.85 0 0 0 5.69 1.45h.01c6.56 0 11.89-5.33 11.89-11.89 0-3.17-1.23-6.15-3.42-8.43ZM12.05 21.8h-.01a9.88 9.88 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.23-.37a9.89 9.89 0 0 1-1.52-5.28C2.16 6.42 6.59 2 12.05 2c2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.9 6.99c0 5.46-4.43 9.9-9.89 9.91Zm5.42-7.42c-.3-.15-1.77-.87-2.05-.97-.28-.1-.48-.15-.68.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.25-.46-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.68-1.64-.93-2.24-.25-.59-.5-.51-.68-.52h-.58c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.27.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.77-.72 2.02-1.41.25-.69.25-1.28.17-1.41-.07-.12-.27-.2-.57-.35Z"
-              />
-            </svg>
-
-            <span>Pedir por WhatsApp</span>
-          </a>
+          Agregar al carrito
+        </button>
 
       </div>
+
 
     `;
 
@@ -398,16 +390,14 @@ function dibujarProductos(lista) {
     // ---------------------------------------------------------
     // ACTUALIZAR WHATSAPP CON EL COLOR SELECCIONADO
     // ---------------------------------------------------------
-
-        const botonWhatsapp =
-          tarjeta.querySelector(".whatsapp-btn");
-
-        if (botonWhatsapp) {
-
-          botonWhatsapp.href =
-            crearLinkWhatsapp(producto, variante);
-
-}
+    // ---------------------------------------------------------
+    // RECORDAR LA VARIANTE ELEGIDA Y BLOQUEAR SI ESTÁ AGOTADA
+    // ---------------------------------------------------------
+      // Cuando el cliente cambia de color:
+      // 1) anotamos qué color eligió, para agregar ese al carrito (no el primero)
+      // 2) si ese color está agotado, apagamos el botón "Agregar al carrito"
+        varianteSeleccionada = variante;
+        tarjeta.querySelector(".add-cart-btn").disabled = estaAgotado(producto, variante);
 
     // ---------------------------------------------------------
     // CAMBIAR IMAGEN
@@ -469,6 +459,10 @@ function dibujarProductos(lista) {
 
     });
 
+    tarjeta.querySelector(".add-cart-btn").addEventListener("click", () => {
+      if (estaAgotado(producto, varianteSeleccionada)) return;
+      agregarAlCarrito(producto.id, varianteSeleccionada);
+    });
 
     elCatalogo.appendChild(tarjeta);
 
@@ -509,5 +503,287 @@ elBuscador.addEventListener("input", (evento) => {
   aplicarFiltros();
 });
 
+/* ============================================================
+   CARRITO
+   Guarda solo { id, variante, cantidad }. El nombre y el precio
+   se buscan siempre en products.json al dibujar, así el carrito
+   nunca queda con precios viejos.
+   ============================================================ */
+const CLAVE_CARRITO = "carrito_la_tienda_bike";
+const MAX_POR_PRODUCTO = 10;
+let carrito = [];
+
+const elCarritoOverlay = document.getElementById("carrito-overlay");
+const elCarritoItems = document.getElementById("carrito-items");
+const elCarritoTotal = document.getElementById("carrito-total");
+const elCarritoCantidad = document.getElementById("carrito-cantidad");
+const elCarritoContinuar = document.getElementById("carrito-continuar");
+
+function guardarCarrito() {
+  try { localStorage.setItem(CLAVE_CARRITO, JSON.stringify(carrito)); } catch (e) {}
+}
+
+function cargarCarrito() {
+  try {
+    const guardado = JSON.parse(localStorage.getItem(CLAVE_CARRITO));
+    if (Array.isArray(guardado)) carrito = guardado;
+  } catch (e) {
+    carrito = [];
+  }
+}
+
+function estaAgotado(producto, variante) {
+  const stock = variante ? variante.stock : producto.stock;
+  return obtenerEstadoStock(stock).clase === "agotado";
+}
+
+function agregarAlCarrito(idProducto, variante) {
+  const etiqueta = variante ? (variante.color || variante.kit || "") : "";
+  const existente = carrito.find((i) => i.id === idProducto && i.variante === etiqueta);
+
+  if (existente) {
+    if (existente.cantidad < MAX_POR_PRODUCTO) existente.cantidad++;
+  } else {
+    carrito.push({ id: idProducto, variante: etiqueta, cantidad: 1 });
+  }
+
+  dibujarCarrito();
+  abrirCarrito();
+}
+
+function dibujarCarrito() {
+  // Si un producto ya no existe en products.json, lo saca del carrito
+  carrito = carrito.filter((i) => todosLosProductos.some((p) => p.id === i.id));
+
+  let total = 0;
+  let unidades = 0;
+  elCarritoItems.innerHTML = "";
+
+  if (carrito.length === 0) {
+    elCarritoItems.innerHTML = '<p class="cart-vacio">Tu carrito está vacío.</p>';
+  }
+
+  carrito.forEach((item, indice) => {
+    const p = todosLosProductos.find((x) => x.id === item.id);
+    const subtotal = p.precio * item.cantidad;
+    total += subtotal;
+    unidades += item.cantidad;
+
+    const fila = document.createElement("div");
+    fila.className = "cart-item";
+    fila.innerHTML = `
+      <div class="cart-item-info">
+        <span class="cart-item-nombre">${p.nombre}</span>
+        ${item.variante ? `<span class="cart-item-variante">${item.variante}</span>` : ""}
+        <span class="cart-item-precio">${formatearPrecio(subtotal)}</span>
+      </div>
+      <div class="cart-item-cantidad">
+        <button type="button" data-accion="restar" data-indice="${indice}" aria-label="Quitar una unidad">−</button>
+        <span>${item.cantidad}</span>
+        <button type="button" data-accion="sumar" data-indice="${indice}" aria-label="Agregar una unidad">+</button>
+      </div>
+      <button type="button" class="cart-item-quitar" data-accion="quitar" data-indice="${indice}" aria-label="Eliminar">🗑</button>
+    `;
+    elCarritoItems.appendChild(fila);
+  });
+
+  elCarritoTotal.textContent = formatearPrecio(total);
+  elCarritoCantidad.textContent = unidades;
+  elCarritoContinuar.disabled = carrito.length === 0;
+  guardarCarrito();
+}
+
+function abrirCarrito() { elCarritoOverlay.classList.add("activo"); }
+function cerrarCarrito() { elCarritoOverlay.classList.remove("activo"); }
+
+// Un solo listener para todos los botones +, − y 🗑 (delegación de eventos)
+elCarritoItems.addEventListener("click", (evento) => {
+  const boton = evento.target.closest("button[data-accion]");
+  if (!boton) return;
+
+  const indice = Number(boton.dataset.indice);
+  const item = carrito[indice];
+  if (!item) return;
+
+  const accion = boton.dataset.accion;
+  if (accion === "sumar" && item.cantidad < MAX_POR_PRODUCTO) item.cantidad++;
+  if (accion === "restar") item.cantidad--;
+  if (accion === "quitar" || item.cantidad <= 0) carrito.splice(indice, 1);
+
+  dibujarCarrito();
+});
+
+document.getElementById("btn-carrito").addEventListener("click", abrirCarrito);
+document.getElementById("carrito-cerrar").addEventListener("click", cerrarCarrito);
+elCarritoOverlay.addEventListener("click", (e) => {
+  if (e.target === elCarritoOverlay) cerrarCarrito();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") cerrarCarrito();
+});
+
+/* ============================================================
+   CHECKOUT (datos del cliente y envío)
+   Aquí solo mostramos el total para que el cliente sepa cuánto
+   pagará. El cobro oficial lo va a calcular el servidor.
+   ============================================================ */
+let configEnvio = null;
+
+const elCheckoutOverlay = document.getElementById("checkout-overlay");
+const elCheckoutForm = document.getElementById("checkout-form");
+const elCheckoutRegion = document.getElementById("checkout-region");
+const elCheckoutResumen = document.getElementById("checkout-resumen");
+const elCheckoutError = document.getElementById("checkout-error");
+
+let comunasPorRegion = {};
+const elCheckoutComuna = document.getElementById("checkout-comuna");
+
+async function cargarEnvio() {
+  try {
+    const [resEnvio, resComunas] = await Promise.all([
+      fetch("envio.json"),
+      fetch("comunas.json"),
+    ]);
+    configEnvio = await resEnvio.json();
+    comunasPorRegion = await resComunas.json();
+    llenarRegiones();
+  } catch (error) {
+    console.error("Error cargando envio.json o comunas.json:", error);
+  }
+}
+
+function llenarRegiones() {
+  elCheckoutRegion.innerHTML = '<option value="">Selecciona tu región</option>';
+
+  Object.keys(comunasPorRegion).forEach((region) => {
+    const opcion = document.createElement("option");
+    opcion.value = region;
+    opcion.textContent = region;
+    elCheckoutRegion.appendChild(opcion);
+  });
+}
+
+function llenarComunas() {
+  const comunas = (comunasPorRegion[elCheckoutRegion.value] || [])
+    .slice()
+    .sort((a, b) => a.localeCompare(b, "es"));
+
+  elCheckoutComuna.innerHTML = '<option value="">Selecciona tu comuna</option>';
+  comunas.forEach((comuna) => {
+    const opcion = document.createElement("option");
+    opcion.value = comuna;
+    opcion.textContent = comuna;
+    elCheckoutComuna.appendChild(opcion);
+  });
+
+  elCheckoutComuna.disabled = comunas.length === 0;
+}
+
+function calcularSubtotal() {
+  return carrito.reduce((suma, item) => {
+    const p = todosLosProductos.find((x) => x.id === item.id);
+    return suma + (p ? p.precio * item.cantidad : 0);
+  }, 0);
+}
+
+// Devuelve el costo de envío, o null si aún no hay región elegida
+function calcularEnvio(region, subtotal) {
+  if (!configEnvio || !region) return null;
+
+  const zona = configEnvio.zonas.find((z) => z.regiones.includes(region));
+  if (!zona) return null;
+
+  if (configEnvio.envioGratisDesde > 0 && subtotal >= configEnvio.envioGratisDesde) {
+    return 0;
+  }
+  return zona.precio;
+}
+
+function dibujarResumenCheckout() {
+  const subtotal = calcularSubtotal();
+  const envio = calcularEnvio(elCheckoutRegion.value, subtotal);
+  const total = envio === null ? subtotal : subtotal + envio;
+
+  let textoEnvio = "Elige tu región";
+  if (envio === 0) textoEnvio = "Gratis";
+  if (envio > 0) textoEnvio = formatearPrecio(envio);
+
+  elCheckoutResumen.innerHTML = `
+    <div><span>Productos</span><span>${formatearPrecio(subtotal)}</span></div>
+    <div><span>Envío</span><span>${textoEnvio}</span></div>
+    <div class="checkout-total"><span>Total a pagar</span><span>${formatearPrecio(total)}</span></div>
+  `;
+}
+
+function abrirCheckout() {
+  cerrarCarrito();
+  dibujarResumenCheckout();
+  elCheckoutOverlay.classList.add("activo");
+}
+
+function cerrarCheckout() {
+  elCheckoutOverlay.classList.remove("activo");
+}
+
+elCarritoContinuar.addEventListener("click", abrirCheckout);
+elCheckoutRegion.addEventListener("change", dibujarResumenCheckout);
+elCheckoutRegion.addEventListener("change", llenarComunas);
+document.getElementById("checkout-cerrar").addEventListener("click", cerrarCheckout);
+document.getElementById("checkout-volver").addEventListener("click", () => {
+  cerrarCheckout();
+  abrirCarrito();
+});
+elCheckoutOverlay.addEventListener("click", (e) => {
+  if (e.target === elCheckoutOverlay) cerrarCheckout();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") cerrarCheckout();
+});
+
+elCheckoutForm.addEventListener("submit", async (evento) => {
+  evento.preventDefault();
+  elCheckoutError.textContent = "";
+
+  const datos = Object.fromEntries(new FormData(elCheckoutForm));
+
+  const telefono = datos.telefono.replace(/[\s+()-]/g, "");
+  if (!/^(56)?9\d{8}$/.test(telefono)) {
+    elCheckoutError.textContent = "Revisa tu teléfono: debe ser un celular chileno, por ejemplo 9 1234 5678.";
+    return;
+  }
+
+  const botonPagar = elCheckoutForm.querySelector("button[type=submit]");
+  botonPagar.disabled = true;
+  botonPagar.textContent = "Creando tu pago...";
+
+  try {
+    const respuesta = await fetch("/api/crear-preferencia", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ carrito, datosCliente: datos }),
+    });
+
+    const resultado = await respuesta.json();
+
+    if (!respuesta.ok) {
+      elCheckoutError.textContent = "No se pudo generar el pago. Intenta de nuevo.";
+      botonPagar.disabled = false;
+      botonPagar.textContent = "Ir a pagar";
+      return;
+    }
+
+    // Lo mandamos a pagar. Mercado Pago se encarga desde aquí.
+    localStorage.setItem("ultimoPedidoNombre", datos.nombre);
+    window.location.href = resultado.linkPago;
+
+  } catch (error) {
+    console.error("Error al crear el pago:", error);
+    elCheckoutError.textContent = "Error de conexión. Revisa tu internet e intenta de nuevo.";
+    botonPagar.disabled = false;
+    botonPagar.textContent = "Ir a pagar";
+  }
+});
+
 // Arrancamos todo cuando carga la página
 cargarProductos();
+cargarEnvio();

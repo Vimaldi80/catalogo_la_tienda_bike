@@ -1,4 +1,4 @@
-crearLink<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -100,7 +100,7 @@ crearLink<!DOCTYPE html>
   <!-- ============ PIE DE PÁGINA ============ -->
   <footer class="footer">
     <p>¿Tienes dudas? Escríbenos directo por
-      <a href="https://wa.me/56930392536" target="_blank" rel="noopener">WhatsApp</a>.
+      <a href="https://wa.me/56981540050" target="_blank" rel="noopener">WhatsApp</a>.
     </p>
   </footer>
 
@@ -120,6 +120,69 @@ crearLink<!DOCTYPE html>
     </div>
   </div>
 
+    <!-- Botón flotante del carrito -->
+  <button class="cart-fab" id="btn-carrito" type="button" aria-label="Abrir carrito">
+    🛒 <span id="carrito-cantidad">0</span>
+  </button>
+
+  <!-- Panel del carrito -->
+  <div class="cart-overlay" id="carrito-overlay">
+    <aside class="cart-panel" role="dialog" aria-label="Tu carrito">
+      <div class="cart-header">
+        <h3>Tu carrito</h3>
+        <button class="modal-cerrar" id="carrito-cerrar" type="button" aria-label="Cerrar">✕</button>
+      </div>
+      <div class="cart-items" id="carrito-items"></div>
+      <div class="cart-footer">
+        <div class="cart-total"><span>Total productos</span><strong id="carrito-total">$0</strong></div>
+        <button class="cart-checkout-btn" id="carrito-continuar" type="button" disabled>Continuar con la compra</button>
+        <p class="cart-nota">El despacho se calcula en el siguiente paso.</p>
+      </div>
+    </aside>
+  </div>
+
+    <!-- Formulario de datos y despacho -->
+  <div class="modal-overlay" id="checkout-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-titulo">Datos de despacho</h3>
+        <button class="modal-cerrar" id="checkout-cerrar" type="button" aria-label="Cerrar">✕</button>
+      </div>
+
+      <form id="checkout-form" class="checkout-form">
+        <label>Nombre completo
+          <input type="text" name="nombre" required autocomplete="name">
+        </label>
+        <label>Correo electrónico
+          <input type="email" name="email" required autocomplete="email">
+        </label>
+        <label>Teléfono celular
+          <input type="tel" name="telefono" required autocomplete="tel" placeholder="9 1234 5678">
+        </label>
+        <label>Región
+          <select name="region" id="checkout-region" required></select>
+        </label>
+        <label>Comuna
+          <select name="comuna" id="checkout-comuna" required disabled>
+            <option value="">Primero elige tu región</option>
+          </select>
+        </label>
+        <label>Calle y número
+          <input type="text" name="direccion" required autocomplete="street-address">
+        </label>
+        <label>Depto, casa o referencias (opcional)
+          <input type="text" name="referencias">
+        </label>
+
+        <div class="checkout-resumen" id="checkout-resumen"></div>
+        <p class="checkout-error" id="checkout-error" role="alert"></p>
+
+        <button type="submit" class="cart-checkout-btn">Ir a pagar</button>
+        <button type="button" class="checkout-volver" id="checkout-volver">← Volver al carrito</button>
+      </form>
+    </div>
+  </div>
+  
   <!-- Nuestro archivo de lógica (JavaScript) -->
   <script src="script.js"></script>
 </body>

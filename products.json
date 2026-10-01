@@ -51,7 +51,7 @@
 
     {
       "id": "h001",
-      "nombre": "Bombín BETO CRH-030PG — con manómetro",
+      "nombre": "Bombín BETO CRH-030PG — con Manómetro",
       "categoria": "Herramientas",
       "precio": 15990,
       "descripcion": "Bombín manual portátil BETO diseñado para inflar neumáticos de bicicleta de manera práctica y eficiente. Manómetro integrado de fácil lectura. Su diseño compacto facilita el transporte durante rutas, paseos y desplazamientos diarios",
@@ -59,7 +59,7 @@
         "Presión máxima: 120 PSI",
         "Compatibilidad: válvulas Presta (fina), Schrader (tipo automóvil)",
         "Diseño: compacto y fácil de transportar",
-        "Manómetro intehrado para monitorear la presión de inflado"
+        "Manómetro integrado para monitorear la presión de inflado"
       ],
       "medidas": "Dimensiones aproximadas: 21 × 4,5 × 2,5 cm",
       "imagen": "assets/productos/bombin.jpg",

@@ -1,0 +1,35 @@
+{
+  "envioGratisDesde": 0,
+  "zonas": [
+    {
+      "id": "rm",
+      "nombre": "Región Metropolitana",
+      "precio": 3990,
+      "regiones": ["Región Metropolitana"]
+    },
+    {
+      "id": "centro",
+      "nombre": "Centro",
+      "precio": 4990,
+      "regiones": ["Valparaíso", "O'Higgins", "Maule", "Ñuble", "Biobío"]
+    },
+    {
+      "id": "norte",
+      "nombre": "Norte",
+      "precio": 5990,
+      "regiones": ["Arica y Parinacota", "Tarapacá", "Antofagasta", "Atacama", "Coquimbo"]
+    },
+    {
+      "id": "sur",
+      "nombre": "Sur",
+      "precio": 5990,
+      "regiones": ["La Araucanía", "Los Ríos", "Los Lagos"]
+    },
+    {
+      "id": "extremo",
+      "nombre": "Zonas extremas",
+      "precio": 8990,
+      "regiones": ["Aysén", "Magallanes"]
+    }
+  ]
+}
